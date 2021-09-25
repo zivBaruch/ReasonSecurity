@@ -6,7 +6,7 @@ const Gallery = (props) => {
 
     useEffect(() => {
         const handleScroll = () => {
-          if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight || props.scrolling) 
+          if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2 || props.scrolling) 
           return props.setScrolling(true);
         }  
         window.addEventListener('scroll', handleScroll);
