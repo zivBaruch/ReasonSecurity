@@ -2,7 +2,6 @@
 import SelectBySearchHistory from './SelectBySearchHistory'
 
 const SearchHistory = (props) => {
-
     return(
         <div className='container'>
             <div>Select one or more to search from your history:</div>

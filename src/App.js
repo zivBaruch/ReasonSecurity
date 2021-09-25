@@ -11,6 +11,9 @@ function App() {
   const [prevSearch , setPrevSearch] = useState([]);
   const [historyDisplay , setHistoryDisplay] = useState(false);
   const [searchByHistory, setSearchByHistory] = useState([]);
+  const [scrolling, setScrolling] = useState(false);
+  const [pixabayPage, setPixabayPage] =useState(1);
+
   
   return (
     <div className="App container">
@@ -35,9 +38,17 @@ function App() {
                   prevSearch={prevSearch}
                   setPrevSearch={setPrevSearch}
                   setHistoryDisplay={setHistoryDisplay}
+                  setPixabayPage = {setPixabayPage}
           />
           <Gallery searchOutput={searchOutput} 
                    prevSearch = {prevSearch} 
+                   setScrolling = {setScrolling}
+                   scrolling = {scrolling}
+                   searchInpt ={searchInpt}
+                   searchOutput = {searchOutput}
+                   setSearchOutput = {setSearchOutput}
+                   setPixabayPage ={setPixabayPage}
+                   pixabayPage ={pixabayPage}
           />  
         </div>
       }

@@ -1,13 +1,14 @@
 
 import getImagesByUserSearch from '../API/Utils';
 
-const Search = ({setSearchInput , setSearchOutput, searchOutput, setPrevSearch, prevSearch, searchInpt, setHistoryDisplay}) =>{
+const Search = ({setSearchInput , setSearchOutput, searchOutput, setPrevSearch, prevSearch, searchInpt, setHistoryDisplay, setPixabayPage}) =>{
 
     const handleSearchInput = async (userInput) => {
         if(userInput !== ''){
-            const resp = await getImagesByUserSearch(userInput);
+            const resp = await getImagesByUserSearch(userInput,'1');
             setSearchInput(userInput);
             setSearchOutput(resp);
+            setPixabayPage(1);
         }else{
             setSearchOutput('');
         } 

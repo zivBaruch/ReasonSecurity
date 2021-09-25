@@ -5,7 +5,46 @@ const SelectBySearchHistory = (props) =>{
 
     const [showSearchHistoryResults, setShowSearchHistoryResults] = useState(false);
     const [operator, setOperator] = useState('');
+    const [afterSort, setAfterSort] = useState([]);
+
+    var arrIds = [];
+    let result = [];
     
+
+    const heandleSearchButton = () => {
+        setShowSearchHistoryResults(true);
+
+        props.searchByHistory.map((item) =>{
+            return ( 
+                    item.results.forEach((image,index,arr) => {
+                        arrIds.push(image);
+                                                                           
+                        if (arr.length - 1 === index) {
+                            if( operator === '1'){
+                                result = Array.from(new Set(arrIds.map(x => x.id))).map(id => {
+                                    return { id:id,
+                                             webformatURL: arrIds.find(x => x.id === id).webformatURL
+                                    }
+                                })
+                            }else{
+                                result = Array.from(arrIds.map(x => x.id))
+                                .filter((e, i, a) => a.indexOf(e) !== i)
+                                .map(id => {
+                                    return { id:id,
+                                             webformatURL: arrIds.find(x => x.id === id).webformatURL
+                                    }
+                                })
+                            }
+                            setAfterSort(result)
+                        }  
+    
+
+                    })
+                ) 
+        });
+        
+    }
+
     return(
         <div>
             <br/>
@@ -24,31 +63,16 @@ const SelectBySearchHistory = (props) =>{
             }
 
             { operator!== '' &&
-                <button onClick={() => setShowSearchHistoryResults(true)}>Search</button>
+                <button onClick={() => heandleSearchButton()}>Search</button>
             }
             <div>
-            {showSearchHistoryResults && operator === '1' ?
-            props.searchByHistory.map((item) =>{
-                        return ( 
-                                item.results.map((image,index) => {
-                                   return <Card key={index} id={image.id} image={image.webformatURL}/>
-                                    
-                                })
 
-                                )
-                    })  
-            :showSearchHistoryResults && operator === '2' ?
-                props.searchByHistory.map((item) =>{
-                        return ( 
-                                item.results.map((image,index) => {
-                                   return <Card key={index} id={image.id} image={image.webformatURL}/>
-                                    
-                                })
-
-                                )
-                    })  
-                
-            : null}    
+                {
+                    afterSort.map((item, index) =>{                               
+                        return <Card key={index} id={item.id} image={item.webformatURL}/>                                
+                    })              
+                }
+               
             </div>      
         </div>
     )

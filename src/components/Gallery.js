@@ -1,6 +1,32 @@
 import Card from "./Card";
+import { useEffect } from "react";
+import getImagesByUserSearch from '../API/Utils';
 
 const Gallery = (props) => {
+
+    useEffect(() => {
+        const handleScroll = () => {
+          if (window.innerHeight + document.documentElement.scrollTop === document.documentElement.offsetHeight || props.scrolling) 
+          return props.setScrolling(true);
+        }  
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+    
+      useEffect(() => {
+            const setMoreItems = async () => {    
+                    const resp = await getImagesByUserSearch(props.searchInpt,props.pixabayPage);
+                    props.setSearchOutput([...props.searchOutput , ...resp]);
+                   
+                    props.setScrolling(false);
+                    props.setPixabayPage(props.pixabayPage + 1)
+            };
+    
+        if (!props.scrolling) return;
+        setMoreItems();
+        
+      }, [props.scrolling]);
+
     return (
         <div className='container'>
             <div>
